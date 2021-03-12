@@ -11,9 +11,14 @@ class ProductController
     }
 
     public function getAll(){
-        $products = $this->productModel->getAll();
-        var_dump($products);
-        include "src/View/product/product-list.php";
+        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+            $products = $this->productModel->getAll();
+            include "src/View/product/product-list.php";
+        }elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $search = $_REQUEST['search'];
+            $products = $this->productModel->searchProduct($search);
+            include "src/View/product/search-product.php";
+        }
     }
 
     public function addProduct(){
@@ -31,6 +36,29 @@ class ProductController
                 $this->productModel->addProduct($productName,$productLine,$productPrice,$productQuantity,$productDate,$productDes);
             }
         }
+    }
+
+    public function updateProduct(){
+        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+            $id = (int)$_REQUEST['id'];
+            $product = $this->productModel->getProductById($id);
+            $productLines = $this->productModel->getProductLine();
+//            var_dump($product);
+            include "src/View/product/update-product.php";
+        }elseif ($_SERVER["REQUEST_METHOD"] == "POST"){
+            $productId = (int)$_REQUEST['product_id'];
+            $productName = $_REQUEST['product_name'];
+            $productLine = $_REQUEST['product_line'];
+            $productPrice = $_REQUEST['product_price'];
+            $productDate = $_REQUEST['product_date'];
+            $productQuantity = $_REQUEST['product_quantity'];
+            $productDes = $_REQUEST['product_des'];
+
+            if (!empty($productId) && !empty($productName) && !empty($productLine) && !empty($productQuantity) && !empty($productPrice) && !empty($productDate) && !empty($productDes)){
+                $this->productModel->updateProduct($productId,$productName,$productLine,$productPrice,$productQuantity,$productDate,$productDes);
+            }
+        }
+
     }
 
     public function deleteProduct(){

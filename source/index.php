@@ -32,6 +32,9 @@ $productController = new ProductController();
             case 'delete-product':
                 $productController->deleteProduct();
                 break;
+            case 'update-product':
+                $productController->updateProduct();
+                break;
         }
         ob_end_flush();
     ?>
