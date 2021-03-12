@@ -22,7 +22,7 @@
         <tr>
             <th><label for="quantity">Số lượng</label></th>
             <th><input name="product_quantity" type="number" id="quantity"></th>
-            <input  name="product_date" type="text" value="<?php echo date("Y-m-d")?>">
+            <input  name="product_date" type="hidden" value="<?php echo date("Y-m-d")?>">
         </tr>
         <tr>
             <th><label for="des">Mô tả</label></th>
